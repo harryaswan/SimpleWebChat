@@ -21,8 +21,9 @@ const start = () => {
         new_conversation.onsubmit = (e) => {
             e.preventDefault();
             let textbox = new_conversation.querySelector('.textbox');
-            addMessage(new_conversation, textbox.value, true);
-            socket.emit('send_chat_message', formatMsg(textbox.value));
+            let new_message = formatMsg(textbox.value);
+            addMessage(new_conversation, new_message.message, true);
+            socket.emit('send_chat_message', new_message);
             textbox.value = '';
         }
         return new_conversation;
@@ -64,14 +65,6 @@ const start = () => {
         addMessage(conversation, msg, false);
     });
 
-    var tmp_msg_a = {
-        sender: {
-            id: 123413123
-        },
-        content: 'Hello there'
-    };
-    let tmp_convo = findConversation(tmp_msg_a);
-    addMessage(tmp_convo, tmp_msg_a, true);
 };
 
 window.onload = start;

@@ -18,11 +18,12 @@ app.get('/', (req, res) => {
 app.post('/recieve_message', (req, res) => {
     let message = req.body;
     if (message && Object.keys(message).length > 0) {
-
         console.log('recieved message: ', message);
-        io.emit('recieve_chat_message', message.message.content);
+        res.status(200).send();
+        io.emit('recieve_chat_message', message.message);
     } else {
         console.log('invalid message recieved');
+        res.status(400).send();
     }
 });
 
